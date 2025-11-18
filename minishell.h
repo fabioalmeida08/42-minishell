@@ -1,0 +1,12 @@
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# define _DEFAULT_SOURCE
+# include <unistd.h>
+# include <stdlib.h>
+# include <signal.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+#endif
