@@ -9,4 +9,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+void	handle_sigint(int sig);
+void	setup_parent_signals(void);
+
+void	interactive_mode(void);
+void	non_interactive_mode(void);
+
 #endif
