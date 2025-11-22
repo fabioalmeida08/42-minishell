@@ -10,7 +10,9 @@
 # include <readline/history.h>
 
 void	handle_sigint(int sig);
-void	setup_parent_signals(void);
+void	setup_interactive_parent_signals(void);
+void	setup_parent_signals_before_execv(void);
+void	setup_child_signals(void);
 
 void	interactive_mode(void);
 void	non_interactive_mode(void);

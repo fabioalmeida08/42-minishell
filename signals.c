@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 14:27:46 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/22 14:39:59 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:39:19 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	handle_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
 
-void	setup_parent_signals(void)
+void	setup_interactive_parent_signals(void)
 {
 	struct sigaction	sa;
 
@@ -36,7 +36,10 @@ void	setup_parent_signals(void)
 	
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
+}
 
+void	setup_child_signals(void)
+{
 	/*
 	Restaura o comportamento padrão dos sinais quando for realizar os processos filhos
     	signal(SIGINT, SIG_DFL);
@@ -44,4 +47,12 @@ void	setup_parent_signals(void)
 		ANTES DO EXECV
 		execve(path, args, envp);
 	*/
+
+	struct sigaction	sa;
+
+	sa.sa_handler = SIG_DFL;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
