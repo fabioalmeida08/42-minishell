@@ -6,13 +6,12 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 14:27:46 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/22 15:39:19 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/11/24 10:47:36 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-//gcc -Wall -Wextra -Werror main.c -lreadline
 
 void	handle_sigint(int sig)
 {

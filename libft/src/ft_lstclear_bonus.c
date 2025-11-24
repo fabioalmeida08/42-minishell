@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interactive_mode.c                                 :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 14:32:35 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/22 14:40:50 by bolegari         ###   ########.fr       */
+/*   Created: 2025/07/23 11:41:10 by fabialme          #+#    #+#             */
+/*   Updated: 2025/07/23 11:55:32 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "minishell.h"
-
-void	interactive_mode(void)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	char	*input;
-	
-	while (1)
+	t_list	*next_node;
+
+	if (!*lst)
+		return ;
+	while (*lst)
 	{
-		input = readline("Minishell> ");
-		if (input == NULL)
-		{
-			free(input);
-			break;
-		}
-		add_history(input);
-		printf("FOI DIGITADO: %s\n", input);
-		free(input);
+		next_node = (*lst)->next;
+		del((*lst)->content);
+		free(*lst);
+		(*lst) = next_node;
 	}
 }

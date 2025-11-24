@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-//gcc -Wall -Wextra -Werror main.c interactive_mode.c non_interactive_mode.c signals.c -lreadline
 
 int	main(int argc, char *argv[], char *envp[])
 {

@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_interactive_mode.c                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 14:34:34 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/22 14:35:56 by bolegari         ###   ########.fr       */
+/*   Created: 2025/07/21 16:30:33 by fabialme          #+#    #+#             */
+/*   Updated: 2025/07/21 16:38:42 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "minishell.h"
-
-void	non_interactive_mode(void)
+char	*ft_strrchr(const char *s, int c)
 {
-	printf("MODO NAO INTERATIVO!!!\n");
+	int	i;
+
+	if (!s)
+		return (NULL);
+	i = ft_strlen(s);
+	while (i >= 0)
+	{
+		if (s[i] == (char) c)
+			return ((char *) &s[i]);
+		i--;
+	}
+	return (NULL);
 }
