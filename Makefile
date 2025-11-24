@@ -19,6 +19,7 @@ SRCS := main.c \
 				interactive_mode.c \
 				non_interactive_mode.c \
 				signals.c \
+				set_env.c \
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS := $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))

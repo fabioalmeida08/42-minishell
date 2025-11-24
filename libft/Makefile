@@ -63,7 +63,6 @@ BONUS = ft_lstnew_bonus.c \
 				ft_lstmap_bonus.c
 
 GNL = get_next_line.c \
-			get_next_line_utils.c\
 
 GREEN = \033[0;32m
 RED = \033[0;31m

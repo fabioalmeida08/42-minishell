@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:55:55 by fabialme          #+#    #+#             */
-/*   Updated: 2025/10/07 11:33:15 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/11/24 18:52:45 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <get_next_line.h>
 
 typedef struct s_list
 {
