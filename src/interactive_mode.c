@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "../includes/lexer.h"
 
 void	interactive_mode(void)
 {
@@ -26,6 +27,8 @@ void	interactive_mode(void)
 		}
 		add_history(input);
 		printf("FOI DIGITADO: %s\n", input);
+
+		ft_strtok(input, "s");
 		free(input);
 	}
 }
