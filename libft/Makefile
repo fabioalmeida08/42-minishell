@@ -30,7 +30,8 @@ PART1 = ft_isalpha.c \
 				ft_calloc.c \
 				ft_strdup.c \
 				ft_atdbl.c \
-				ft_strcmp.c
+				ft_strcmp.c \
+				ft_strtok.c \
 
 PART2 = ft_substr.c \
 				ft_strjoin.c \
