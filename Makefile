@@ -14,15 +14,24 @@ RESET = \033[0m
 
 SRCS_DIR = src
 OBJS_DIR = objs
+LEXER_DIR := $(SRCS_DIR)/lexer
 
 SRCS := main.c \
 				interactive_mode.c \
 				non_interactive_mode.c \
 				signals.c \
-				set_env.c \
+				set_env.c
+
+LEXER_SRC := lexer_utils.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
-OBJS := $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
+LEXER_SRC := $(addprefix $(LEXER_DIR)/, $(LEXER_SRC))
+
+ALL_SRCS := $(SRCS) $(LEXER_SRC)
+# LEXER_OBJS := $(patsubst $(LEXER_DIR)/%.c, $(OBJS_DIR)/%.o, $(LEXER_SRC))
+#
+OBJS := $(ALL_SRCS:%.c=$(OBJS_DIR)/%.o)
+
 DEPS := $(OBJS:.o=.d)
 
 all: $(NAME)
@@ -32,9 +41,9 @@ $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(GREEN)🛠️ Finished compiling $(NAME) objects$(RESET)"
 	@echo "$(GREEN)🚀 $@ was created$(RESET)"
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+$(OBJS_DIR)/%.o: %.c
 	@$(DIR_DUP)
-	@$(CC) $(CCFLAGS) $(CPPFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 -include $(DEPS)
 
