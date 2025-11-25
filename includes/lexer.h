@@ -6,12 +6,15 @@
 /*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:32:06 by fabialme          #+#    #+#             */
-/*   Updated: 2025/11/25 11:39:20 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/11/25 11:57:12 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
+
+# include "../libft/includes/libft.h"
+# include <stdbool.h>
 
 typedef enum e_token_type
 {
@@ -34,5 +37,7 @@ typedef struct s_token
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
+
+t_token *ft_strtok(const char *str, char *delimiter);
 
 #endif // !LEXER_H
