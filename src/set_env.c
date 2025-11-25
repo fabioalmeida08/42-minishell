@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 20:13:12 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/24 20:26:00 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/11/25 10:55:32 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	key_value_breaker(char **envp, int i, char **key, char **value)
 {
 	char	*eq;
-	
+
 	eq = strchr(envp[i], '=');
 	if (eq)
 	{
@@ -41,9 +41,7 @@ static int	set_env_list(char **key, char **value, t_shell *shell_vars)
 	new_node->value = *value;
 	new_node->next = NULL;
 	if (shell_vars->env_list == NULL)
-	{
 		shell_vars->env_list = new_node;
-	}
 	else
 	{
 		temp = shell_vars->env_list;
@@ -54,29 +52,35 @@ static int	set_env_list(char **key, char **value, t_shell *shell_vars)
 	return (1);
 }
 
-static void print_env_list(t_env *env_list)
+t_env	*get_key_env_list(t_env *env_list, char *str)
 {
-	t_env	*temp = env_list;
-	while (temp != NULL)
-	{
-		printf("key: %s | value: %s\n", temp->key, temp->value);
-		temp = temp->next;
-	}
-}
-
-void get_key_env_list(t_env *env_list, char *str)
-{
-    t_env	*temp = env_list;
+	t_env	*temp;
 	t_env	*found;
 
-    while (temp != NULL)
+	temp = env_list;
+	while (temp != NULL)
 	{
 		if (ft_strcmp(temp->key, str))
 		{
 			found = temp;
-			printf("FOUND key: %s | value: %s\n", found->key, found->value);
+			return (found);
 		}
 		temp = temp->next;
+	}
+	return (NULL);
+}
+
+void	free_env_list(t_env *env_list)
+{
+	t_env	*temp;
+
+	while (env_list != NULL)
+	{
+		temp = env_list;
+		env_list = env_list->next;
+		free(temp->key);
+		free(temp->value);
+		free(temp);
 	}
 }
 
@@ -85,6 +89,7 @@ void	init_env(char **envp, t_shell *shell_vars)
 	int		i;
 	char	*key;
 	char	*value;
+	t_env	*test;
 
 	i = 0;
 	shell_vars->envp = envp;
@@ -93,9 +98,14 @@ void	init_env(char **envp, t_shell *shell_vars)
 	{	
 		key_value_breaker(envp, i, &key, &value);
 		if (!(set_env_list(&key, &value, shell_vars)))
-			break;
+		{
+			free(key);
+			free(value);
+			break ;
+		}
 		i++;
 	}
-	print_env_list(shell_vars->env_list);
-	get_key_env_list(shell_vars->env_list, "PATH");
+	test = get_key_env_list(shell_vars->env_list, "PATH");
+	printf("TEST key %s | value %s\n", test->key, test->value);
+	free_env_list(shell_vars->env_list);
 }

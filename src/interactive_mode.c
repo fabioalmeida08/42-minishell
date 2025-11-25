@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 14:32:35 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/22 14:40:50 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/11/25 10:17:08 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	interactive_mode(void)
 {
 	char	*input;
-	
+
 	while (1)
 	{
 		input = readline("Minishell> ");
 		if (input == NULL)
 		{
 			free(input);
-			break;
+			break ;
 		}
 		add_history(input);
 		printf("FOI DIGITADO: %s\n", input);
