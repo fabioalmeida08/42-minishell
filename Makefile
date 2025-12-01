@@ -36,7 +36,7 @@ LEXER_SRC := $(addprefix $(LEXER_DIR)/, $(LEXER_SRC))
 SIGNAL_SRC := $(addprefix $(SIGNAL_DIR)/, $(SIGNAL_SRC))
 INIT_ENV_SRC := $(addprefix $(INIT_ENV_DIR)/, $(INIT_ENV_SRC))
 
-ALL_SRCS := $(SRCS) $(LEXER_SRC)
+ALL_SRCS := $(SRCS) $(LEXER_SRC) $(SIGNAL_SRC) $(INIT_ENV_SRC)
 OBJS := $(ALL_SRCS:%.c=$(OBJS_DIR)/%.o)
 
 DEPS := $(OBJS:.o=.d)

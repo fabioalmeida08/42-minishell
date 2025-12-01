@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	key_value_breaker(char *envp, char **key, char **value)
 {
@@ -92,24 +92,17 @@ void	init_env(char **envp, t_shell *shell_vars)
 	char	*key;
 	char	*value;
 	t_env	*node;
-	t_env	*temp;
 
 	i = 0;
 	shell_vars->envp = envp;
 	shell_vars->env_list = NULL;
 	while (envp[i])
-<<<<<<< HEAD:src/set_env.c
-	{
-		key_value_breaker(envp, i, &key, &value);
-		if (!(set_env_list(&key, &value, shell_vars)))
-=======
 	{	
 		key_value_breaker(envp[i], &key, &value);
 		node = create_env_node(key, value);
 		free(key);
 		free(value);
 		if (!append_env_list(&shell_vars->env_list, node))
->>>>>>> develop:src/init_env.c
 		{
 			free_env_list(shell_vars->env_list);
 			return ;

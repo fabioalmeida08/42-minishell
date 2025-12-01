@@ -40,17 +40,20 @@ static bool check_syntax(const char *str)
 	return (!in_single && !in_double && !escaped);
 }
 
-t_token	*split_tokens(char *str)
-{
-	//echo "texto" > "file.txt"
-	t_token	*token;
-}
+// t_token	*split_tokens(char *str)
+// {
+// 	//echo "texto" > "file.txt"
+// 	t_token	*token;
+// }
 
 t_token	*ft_tokenize(const char *str, t_shell *sh)
 {
+	t_token	*token;
+
+	token = NULL;
 	if (!check_syntax(str))
 		return (lexer_syntax_error(token, sh));
-	return (split_tokens(str));
+	return (NULL);
 }
 
 
