@@ -15,21 +15,26 @@ RESET = \033[0m
 SRCS_DIR = src
 OBJS_DIR = objs
 LEXER_DIR := $(SRCS_DIR)/lexer
+SIGNAL_DIR := $(SRCS_DIR)/signal
+INIT_ENV_DIR := $(SRCS_DIR)/init_env
 
 SRCS := main.c \
 				interactive_mode.c \
 				non_interactive_mode.c \
-				signals.c \
-				set_env.c
 
 LEXER_SRC := lexer_utils.c \
 				lexer_utils2.c \
-				token_utils.c
-				init_env.c \
+				token_utils.c \
+
+SIGNAL_SRC := signals.c \
+
+INIT_ENV_SRC := init_env.c \
 				init_env_utils.c \
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 LEXER_SRC := $(addprefix $(LEXER_DIR)/, $(LEXER_SRC))
+SIGNAL_SRC := $(addprefix $(SIGNAL_DIR)/, $(SIGNAL_SRC))
+INIT_ENV_SRC := $(addprefix $(INIT_ENV_DIR)/, $(INIT_ENV_SRC))
 
 ALL_SRCS := $(SRCS) $(LEXER_SRC)
 OBJS := $(ALL_SRCS:%.c=$(OBJS_DIR)/%.o)
