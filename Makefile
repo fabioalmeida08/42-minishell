@@ -23,8 +23,10 @@ SRCS := main.c \
 				set_env.c
 
 LEXER_SRC := lexer_utils.c \
-						 lexer_utils2.c \
-						 token_utils.c
+				lexer_utils2.c \
+				token_utils.c
+				init_env.c \
+				init_env_utils.c \
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 LEXER_SRC := $(addprefix $(LEXER_DIR)/, $(LEXER_SRC))

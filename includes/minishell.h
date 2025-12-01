@@ -41,8 +41,15 @@ void	setup_interactive_parent_signals(void);
 void	setup_child_signals(void);
 
 void	init_env(char **envp, t_shell *shell_vars);
-t_env	*get_key_env_list(t_env *env_list, char *str);
 void	free_env_list(t_env *env_list);
+t_env	*create_env_node(char *key, char *value);
+int		append_env_list(t_env **head, t_env *new_node);
+
+t_env	*get_env_node(t_env *env_list, char *key);
+char	*get_env_value(t_env *env_list, char *key);
+int		add_env_var(t_env **env_list, char *key, char *value);
+int		update_env_var(t_env *env_list, char *key, char *value);
+int		remove_env_var(t_env **env_list, char *key);
 
 void	interactive_mode(t_shell *sh);
 void	non_interactive_mode(void);
