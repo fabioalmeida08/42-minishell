@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 16:10:15 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/25 10:18:38 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:43:36 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_shell	shell_vars;
+	t_shell	sh;
 
 	(void)argc;
 	(void)argv;
-	init_env(envp, &shell_vars);
+	init_env(envp, &sh);
 	if (isatty(STDIN_FILENO))
 	{
 		setup_interactive_parent_signals();
-		interactive_mode();
+		interactive_mode(&sh);
 	}
 	else
 		non_interactive_mode();

@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   ft_is_whitespace.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/25 10:14:59 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/25 10:34:41 by bolegari         ###   ########.fr       */
+/*   Created: 2025/12/01 11:20:58 by fabialme          #+#    #+#             */
+/*   Updated: 2025/12/01 11:21:17 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "libft.h"
 
-typedef struct s_env
+bool	ft_is_whitespace(char c)
 {
-	char			*key;
-	char			*value;
-	struct s_env	*next;	
-}	t_env;
-
-typedef struct s_shell
-{
-	char	**envp;
-	t_env	*env_list;
-}	t_shell;
-
-#endif
+	return (c == ' ' || c == '\t' || c == '\n');
+}

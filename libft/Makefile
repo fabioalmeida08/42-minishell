@@ -32,6 +32,8 @@ PART1 = ft_isalpha.c \
 				ft_atdbl.c \
 				ft_strcmp.c \
 				ft_strtok.c \
+				ft_strndup.c \
+				ft_is_whitespace.c
 
 PART2 = ft_substr.c \
 				ft_strjoin.c \

@@ -22,14 +22,14 @@ SRCS := main.c \
 				signals.c \
 				set_env.c
 
-LEXER_SRC := lexer_utils.c
+LEXER_SRC := lexer_utils.c \
+						 lexer_utils2.c \
+						 token_utils.c
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 LEXER_SRC := $(addprefix $(LEXER_DIR)/, $(LEXER_SRC))
 
 ALL_SRCS := $(SRCS) $(LEXER_SRC)
-# LEXER_OBJS := $(patsubst $(LEXER_DIR)/%.c, $(OBJS_DIR)/%.o, $(LEXER_SRC))
-#
 OBJS := $(ALL_SRCS:%.c=$(OBJS_DIR)/%.o)
 
 DEPS := $(OBJS:.o=.d)
@@ -63,6 +63,5 @@ fclean: clean
 re: fclean all
 	@make $(MAKEFLAGS) -C $(LIBFT_PATH) re
 	@echo "$(BLUE)🔄 $(NAME) rebuild$(RESET)"
-
 
 .PHONY: all clean fclean re

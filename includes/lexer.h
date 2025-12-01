@@ -6,7 +6,7 @@
 /*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:32:06 by fabialme          #+#    #+#             */
-/*   Updated: 2025/11/25 11:57:12 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:35:42 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 # define LEXER_H
 
 # include "../libft/includes/libft.h"
-# include <stdbool.h>
+# include "./minishell.h"
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_REDIR_HEREDOC,
-	TOKEN_AND,
-	TOKEN_OR,
-	TOKEN_PAREN_OPEN,
-	TOKEN_PAREN_CLOSE,
-	TOKEN_EOF
+	TK_WORD,
+	TK_PIPE,
+  TK_AND,
+	TK_OR,
+  TK_PAREN_OPEN,
+	TK_PAREN_CLOSE,
+	TK_REDIR_IN,
+	TK_REDIR_OUT,
+	TK_REDIR_APPEND,
+	TK_REDIR_HEREDOC,
+	TK_EOF
 }	t_token_type;
 
 typedef struct s_token
@@ -38,6 +38,6 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-t_token *ft_strtok(const char *str, char *delimiter);
-
+t_token	*ft_tokenize(const char *str, t_shell *sh);
+void	*lexer_syntax_error(t_token *token, t_shell *sh);
 #endif // !LEXER_H

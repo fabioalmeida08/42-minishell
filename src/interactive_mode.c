@@ -6,14 +6,14 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 14:32:35 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/25 10:17:08 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:35:31 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/lexer.h"
 
-void	interactive_mode(void)
+void	interactive_mode(t_shell *sh)
 {
 	char	*input;
 
@@ -27,8 +27,7 @@ void	interactive_mode(void)
 		}
 		add_history(input);
 		printf("FOI DIGITADO: %s\n", input);
-
-		ft_strtok(input, "s");
+		ft_tokenize(input, sh);
 		free(input);
 	}
 }

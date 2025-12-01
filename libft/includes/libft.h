@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:55:55 by fabialme          #+#    #+#             */
-/*   Updated: 2025/11/24 18:52:45 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:22:01 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -84,4 +85,6 @@ int		unbr_handler(va_list args, int fd);
 int		ptr_handler(va_list args, int fd);
 double	ft_atdbl(const char *nptr);
 int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strndup(const char *s, size_t n);
+bool	ft_is_whitespace(char c);
 #endif // !LIBFT_H

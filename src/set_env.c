@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 20:13:12 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/25 10:55:32 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:39:00 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	init_env(char **envp, t_shell *shell_vars)
 	shell_vars->envp = envp;
 	shell_vars->env_list = NULL;
 	while (envp[i])
-	{	
+	{
 		key_value_breaker(envp, i, &key, &value);
 		if (!(set_env_list(&key, &value, shell_vars)))
 		{
