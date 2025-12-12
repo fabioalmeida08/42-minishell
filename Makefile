@@ -17,26 +17,38 @@ OBJS_DIR = objs
 LEXER_DIR := $(SRCS_DIR)/lexer
 SIGNAL_DIR := $(SRCS_DIR)/signal
 INIT_ENV_DIR := $(SRCS_DIR)/init_env
+SIMPLE_EXECVE_DIR := $(SRCS_DIR)/simple_execve
+BUILTIN_DIR := $(SRCS_DIR)/builtin
 
 SRCS := main.c \
 				interactive_mode.c \
 				non_interactive_mode.c \
 
 LEXER_SRC := lexer_utils.c \
-				lexer_utils2.c \
 				token_utils.c \
 
 SIGNAL_SRC := signals.c \
 
 INIT_ENV_SRC := init_env.c \
 				init_env_utils.c \
+				init_env_utils2.c \
+
+SIMPLE_EXECVE_SRC := execve_cmd.c \
+
+BUILTIN_SRC :=	builtin_utils.c \
+				builtin_env.c \
+				builtin_pwd.c \
+				builtin_export.c \
+				builtin_unset.c \
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 LEXER_SRC := $(addprefix $(LEXER_DIR)/, $(LEXER_SRC))
 SIGNAL_SRC := $(addprefix $(SIGNAL_DIR)/, $(SIGNAL_SRC))
 INIT_ENV_SRC := $(addprefix $(INIT_ENV_DIR)/, $(INIT_ENV_SRC))
+SIMPLE_EXECVE_SRC := $(addprefix $(SIMPLE_EXECVE_DIR)/, $(SIMPLE_EXECVE_SRC))
+BUILTIN_SRC := $(addprefix $(BUILTIN_DIR)/, $(BUILTIN_SRC))
 
-ALL_SRCS := $(SRCS) $(LEXER_SRC) $(SIGNAL_SRC) $(INIT_ENV_SRC)
+ALL_SRCS := $(SRCS) $(LEXER_SRC) $(SIGNAL_SRC) $(INIT_ENV_SRC) $(SIMPLE_EXECVE_SRC) $(BUILTIN_SRC)
 OBJS := $(ALL_SRCS:%.c=$(OBJS_DIR)/%.o)
 
 DEPS := $(OBJS:.o=.d)

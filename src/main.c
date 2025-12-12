@@ -19,6 +19,7 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	init_env(envp, &sh);
+	init_builtin(&sh);
 	if (isatty(STDIN_FILENO))
 	{
 		setup_interactive_parent_signals();

@@ -3,20 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:48:32 by fabialme          #+#    #+#             */
-/*   Updated: 2025/12/01 11:58:23 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/12/11 16:18:51 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
+#include "../../includes/minishell.h"
 
-static bool check_syntax(const char *str)
+void	*lexer_syntax_error(t_token *token, t_shell *sh)
 {
-	bool in_single;
-	bool in_double;
-	bool escaped;
+	if (token)
+	{
+		free(token->value);
+		free(token);
+	}
+	ft_putstr_fd("Syntax error\n", 2);
+	sh->exit_status = 2;
+	return (NULL);
+}
+
+static bool	check_syntax(const char *str)
+{
+	bool	in_single;
+	bool	in_double;
+	bool	escaped;
 
 	in_single = false;
 	in_double = false;
@@ -24,12 +36,8 @@ static bool check_syntax(const char *str)
 	while (*str)
 	{
 		if (escaped)
-		{
 			escaped = false;
-			str++;
-			continue ;
-		}
-		if (*str == '\\')
+		if (*str == '\\' && !in_single)
 			escaped = true;
 		else if (*str == '\'' && !in_double)
 			in_single = !in_single;
@@ -40,124 +48,138 @@ static bool check_syntax(const char *str)
 	return (!in_single && !in_double && !escaped);
 }
 
-// t_token	*split_tokens(char *str)
-// {
-// 	//echo "texto" > "file.txt"
-// 	t_token	*token;
-// }
+static char	*extract_word(const char **str)
+{
+	const char	*start;
+	size_t		len;
+	char		quote;
+	char		c;
+
+	start = *str;
+	len = 0;
+	quote = 0;
+	if (!str || !*str || **str == 0)
+		return (NULL);
+	while ((*str)[len])
+	{
+		c = (*str)[len];
+		if (quote == 0)
+		{
+			if (c == '\'' || c == '"')
+			{
+				quote = c;
+				len++;
+				continue ;
+			}
+			else if (ft_is_whitespace(c) || (c == '|' || c == '<' || c == '>'))
+				break ;
+		}
+		else
+		{
+			if (c == quote)
+			{
+				quote = 0;
+				len++;
+				continue ;
+			}
+			else if (c == '\\' && quote == '"')
+			{
+				len++;
+				if ((*str)[len])
+					len++;
+				continue ;
+			}
+		}
+		len++;
+	}
+	*str += len;
+	if (len == 0)
+		return (NULL);
+	return (ft_strndup(start, len));
+}
+
+static t_token	*handle_operator(const char **str)
+{
+	t_token_type	type;
+	char			*value;
+	size_t			len;
+
+	if (!str || !*str || **str == '\0')
+		return (NULL);
+	len = 1;
+	if (**str == '|')
+		type = TK_PIPE;
+	else if (**str == '<' && *(*str + 1) == '<')
+	{
+		type = TK_REDIR_HEREDOC;
+		len = 2;
+	}
+	else if (**str == '>' && *(*str + 1) == '>')
+	{
+		type = TK_REDIR_APPEND;
+		len = 2;
+	}
+	else if (**str == '<')
+		type = TK_REDIR_IN;
+	else
+		type = TK_REDIR_OUT;
+	value = ft_strndup(*str, len);
+	if (!value)
+		return (NULL);
+	*str += len;
+	return (create_token(type, value));
+}
+
+t_token	*ft_strtok(const char *str, t_shell *sh)
+{
+	t_token	*tokens;
+	t_token	*new_token;
+	char	*word;
+
+	tokens = NULL;
+	if (!str || !check_syntax(str))
+		return (lexer_syntax_error(tokens, sh));
+	while (*str)
+	{
+		while (ft_is_whitespace(*str))
+			str++;
+		if (*str == '\0')
+			break ;
+		if ((*str == '|' || *str == '<' || *str == '>'))
+		{
+			new_token = handle_operator(&str);
+			if (!new_token)
+				return (lexer_syntax_error(tokens, sh));
+			add_token_back(&tokens, new_token);
+		}
+		else
+		{
+			word = extract_word(&str);
+			if (word)
+			{
+				new_token = create_token(TK_WORD, word);
+				if (!new_token)
+				{
+					free(word);
+					return (lexer_syntax_error(tokens, sh));
+				}
+				add_token_back(&tokens, new_token);
+			}
+		}
+	}
+	return (tokens);
+}
 
 t_token	*ft_tokenize(const char *str, t_shell *sh)
 {
-	t_token	*token;
+	t_token	*tokens;
 
-	token = NULL;
+	tokens = NULL;
 	if (!check_syntax(str))
-		return (lexer_syntax_error(token, sh));
-	return (NULL);
+		return (lexer_syntax_error(tokens, sh));
+	tokens = ft_strtok(str, sh);
+	if (!tokens)
+		return (NULL);
+	print_tokens(tokens);
+	return (tokens);
 }
-
-
-
-// static bool	is_operator_char(char c)
-// {
-// 	return (c == '|' || c == '<' || c == '>');
-// }
-
-
-// static char	*extract_word(const char **str)
-// {
-// 	const char	*start;
-// 	size_t		len;
-// 	char		quote;
-//
-// 	start = *str;
-// 	len = 0;
-// 	quote = 0;
-// 	while ((*str)[len])
-// 	{
-// 		if (quote == 0 && ((*str)[len] == '\'' || (*str)[len] == '"'))
-// 			quote = (*str)[len];
-// 		else if (quote && (*str)[len] == quote)
-// 			quote = 0;
-// 		else if (!quote && (is_whitespace((*str)[len])
-// 				|| is_operator_char((*str)[len])))
-// 			break ;
-// 		len++;
-// 	}
-// 	*str += len;
-// 	return (ft_strndup(start, len));
-// }
-//
-// static t_token	*handle_operator(const char **str)
-// {
-// 	t_token_type	type;
-// 	char			*value;
-//
-// 	if (**str == '|')
-// 	{
-// 		type = TOKEN_PIPE;
-// 		value = ft_strndup(*str, 1);
-// 		(*str)++;
-// 	}
-// 	else if (**str == '<' && *(*str + 1) == '<')
-// 	{
-// 		type = TOKEN_REDIR_HEREDOC;
-// 		value = ft_strndup(*str, 2);
-// 		(*str) += 2;
-// 	}
-// 	else if (**str == '>' && *(*str + 1) == '>')
-// 	{
-// 		type = TOKEN_REDIR_APPEND;
-// 		value = ft_strndup(*str, 2);
-// 		(*str) += 2;
-// 	}
-// 	else if (**str == '<')
-// 	{
-// 		type = TOKEN_REDIR_IN;
-// 		value = ft_strndup(*str, 1);
-// 		(*str)++;
-// 	}
-// 	else
-// 	{
-// 		type = TOKEN_REDIR_OUT;
-// 		value = ft_strndup(*str, 1);
-// 		(*str)++;
-// 	}
-// 	return (create_token(type, value));
-// }
-//
-//
-// t_token	*ft_strtok(const char *str, t_shell *sh)
-// {
-// 	t_token	*tokens;
-// 	t_token	*new_token;
-// 	char	*word;
-//
-// 	tokens = NULL;
-// 	if (!check_syntax(str))
-// 		return (lexer_syntax_error(sh));
-// 	while (*str)
-// 	{
-// 		while (is_whitespace(*str))
-// 			str++;
-// 		if (*str == '\0')
-// 			break ;
-// 		if (is_operator_char(*str))
-// 		{
-// 			new_token = handle_operator(&str);
-// 			add_token_back(&tokens, new_token);
-// 		}
-// 		else
-// 		{
-// 			word = extract_word(&str);
-// 			if (word && *word)
-// 			{
-// 				new_token = create_token(TOKEN_WORD, word);
-// 				add_token_back(&tokens, new_token);
-// 			}
-// 			else
-// 				free(word);
-// 		}
-// 	}
-// 	return (tokens);
-// }

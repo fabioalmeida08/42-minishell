@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:04:53 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/27 10:34:20 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:11:22 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ char	*get_env_value(t_env *env_list, char *key)
 		return (node->value);
 	else
 		return (NULL);
-}
-
-int	add_env_var(t_env **env_list, char *key, char *value)
-{
-	t_env	*new_node;
-
-	new_node = create_env_node(key, value);
-	if (!new_node)
-		return (0);
-	return (append_env_list(env_list, new_node));
 }
 
 int	update_env_var(t_env *env_list, char *key, char *value)
@@ -80,4 +70,18 @@ int	remove_env_var(t_env **env_list, char *key)
 		temp = temp->next;
 	}
 	return (0);
+}
+
+void	free_env_list(t_env *head)
+{
+	t_env	*temp;
+
+	while (head)
+	{
+		temp = head->next;
+		free(head->key);
+		free(head->value);
+		free(head);
+		head = temp;
+	}
 }

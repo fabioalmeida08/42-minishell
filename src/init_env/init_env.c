@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 20:13:12 by bolegari          #+#    #+#             */
-/*   Updated: 2025/11/28 14:39:00 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:13:41 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	key_value_breaker(char *envp, char **key, char **value)
 	}
 }
 
-t_env	*create_env_node(char *key, char *value)
+static t_env	*create_env_node(char *key, char *value)
 {
 	t_env	*new_node;
 
@@ -54,7 +54,7 @@ t_env	*create_env_node(char *key, char *value)
 	return (new_node);
 }
 
-int	append_env_list(t_env **head, t_env *new_node)
+static int	append_env_list(t_env **head, t_env *new_node)
 {
 	t_env	*temp;
 
@@ -72,18 +72,14 @@ int	append_env_list(t_env **head, t_env *new_node)
 	return (1);
 }
 
-void	free_env_list(t_env *head)
+int	add_env_var(t_env **env_list, char *key, char *value)
 {
-	t_env	*temp;
+	t_env	*new_node;
 
-	while (head)
-	{
-		temp = head->next;
-		free(head->key);
-		free(head->value);
-		free(head);
-		head = temp;
-	}
+	new_node = create_env_node(key, value);
+	if (!new_node)
+		return (0);
+	return (append_env_list(env_list, new_node));
 }
 
 void	init_env(char **envp, t_shell *shell_vars)
@@ -96,8 +92,10 @@ void	init_env(char **envp, t_shell *shell_vars)
 	i = 0;
 	shell_vars->envp = envp;
 	shell_vars->env_list = NULL;
+	shell_vars->head_tokens = NULL;
+	shell_vars->exit_status = 0;
 	while (envp[i])
-	{	
+	{
 		key_value_breaker(envp[i], &key, &value);
 		node = create_env_node(key, value);
 		free(key);
@@ -109,5 +107,4 @@ void	init_env(char **envp, t_shell *shell_vars)
 		}
 		i++;
 	}
-	free_env_list(shell_vars->env_list);
 }
