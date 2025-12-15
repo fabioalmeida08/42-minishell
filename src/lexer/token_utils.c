@@ -57,6 +57,7 @@ void	ft_free_tokens(t_token *tokens)
 	}
 }
 
+//TODO: remover func debug
 void	print_tokens(t_token *tokens)
 {
 	t_token	*current;
