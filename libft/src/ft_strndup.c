@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fabialme <fabialme@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/21 16:51:02 by fabialme          #+#    #+#             */
-/*   Updated: 2025/07/21 16:59:29 by fabialme         ###   ########.fr       */
+/*   Created: 2025/12/01 10:25:42 by fabialme          #+#    #+#             */
+/*   Updated: 2025/12/01 10:28:11 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+char	*ft_strndup(const char *s, size_t n)
 {
-	unsigned char	*mem;
-	size_t			i;
+	char	*dup;
+	size_t	i;
 
 	if (!s)
 		return (NULL);
+	dup = malloc(sizeof(char) * (n + 1));
+	if (!dup)
+		return (NULL);
 	i = 0;
-	mem = (unsigned char *) s;
-	while (i < n)
+	while (i < n && s[i])
 	{
-		if (mem[i] == (unsigned char) c)
-			return ((void *) mem + i);
+		dup[i] = s[i];
 		i++;
 	}
-	return (NULL);
+	dup[i] = '\0';
+	return (dup);
 }

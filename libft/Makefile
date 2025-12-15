@@ -30,7 +30,10 @@ PART1 = ft_isalpha.c \
 				ft_calloc.c \
 				ft_strdup.c \
 				ft_atdbl.c \
-				ft_strcmp.c
+				ft_strcmp.c \
+				ft_strtok.c \
+				ft_strndup.c \
+				ft_is_whitespace.c
 
 PART2 = ft_substr.c \
 				ft_strjoin.c \
@@ -63,7 +66,6 @@ BONUS = ft_lstnew_bonus.c \
 				ft_lstmap_bonus.c
 
 GNL = get_next_line.c \
-			get_next_line_utils.c\
 
 GREEN = \033[0;32m
 RED = \033[0;31m
