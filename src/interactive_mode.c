@@ -6,16 +6,30 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 14:32:35 by bolegari          #+#    #+#             */
-/*   Updated: 2025/12/15 14:40:52 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:49:34 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	execute_cmd(t_ast *ast, t_shell *sh)
+{
+	if (is_builtin(ast->args, sh))
+		exec_builtin(ast->args, sh);
+	else
+		execve_cmd(ast->args, sh);
+}
+
+void	execute_ast(t_ast *ast, t_shell *sh)
+{
+	if (ast->type == CMD_NODE)
+		execute_cmd(ast, sh);
+}
+
+
 void	interactive_mode(t_shell *sh)
 {
 	char	*input;
-	t_ast	*ast;
 
 	while (1)
 	{
@@ -27,16 +41,14 @@ void	interactive_mode(t_shell *sh)
 		}
 		add_history(input);
 		sh->head_tokens = ft_tokenize(input, sh);
-		ast = parser_ast(sh->head_tokens);
-		print_ast(ast, 1);
-		/*
-		char **input_splited = ft_split(input, ' ');
-		if (is_builtin(input_splited, sh))
-			exec_builtin(input_splited, sh);
-		else
-			execve_cmd(input_splited, sh);
-		free_envp(input_splited);
-		*/
+		if (!sh->head_tokens)
+		{
+			free(input);
+			continue ;
+		}
+		sh->head_ast = parser_ast(sh->head_tokens);
+		print_ast(sh->head_ast, 1);
+		execute_ast(sh->head_ast, sh);
 		ft_free_tokens(sh->head_tokens);
 		sh->head_tokens = NULL;
 		free(input);
