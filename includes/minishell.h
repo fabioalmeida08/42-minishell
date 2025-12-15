@@ -138,6 +138,7 @@ char	*extract_word(const char **str);
 t_token	*handle_operator(const char **str);
 t_token	*ft_strtok(const char *str, t_shell *sh);
 bool	check_syntax(const char *str);
+t_ast	*parser_cmd(t_token *tokens);
 
 //DEBUG
 void print_ast(t_ast *node, int depth);
