@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 10:47:12 by fabialme          #+#    #+#             */
-/*   Updated: 2025/12/11 17:24:02 by bolegari         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:39:14 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,11 @@ void	builtin_env(char **cmd, t_shell *sh);
 void	builtin_export(char **cmd, t_shell *sh);
 void	builtin_unset(char **cmd, t_shell *sh);
 
+//PARSER
+t_token	*find_last_pipe(t_token *tokens);
+t_ast	*parser_ast(t_token *tokens);
+t_ast	*parser_cmd(t_token *tokens);
+
+//DEBUG
+void print_ast(t_ast *node, int depth);
 #endif
