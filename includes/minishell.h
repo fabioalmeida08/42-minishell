@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 10:47:12 by fabialme          #+#    #+#             */
-/*   Updated: 2025/12/15 14:39:14 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/12/15 15:18:43 by fabialme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,10 @@ void	builtin_unset(char **cmd, t_shell *sh);
 t_token	*find_last_pipe(t_token *tokens);
 t_ast	*parser_ast(t_token *tokens);
 t_ast	*parser_cmd(t_token *tokens);
+char	*extract_word(const char **str);
+t_token	*handle_operator(const char **str);
+t_token	*ft_strtok(const char *str, t_shell *sh);
+bool	check_syntax(const char *str);
 
 //DEBUG
 void print_ast(t_ast *node, int depth);
