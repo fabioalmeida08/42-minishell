@@ -27,34 +27,39 @@ void	export_print(t_shell *sh)
 	}
 }
 
-void	builtin_export(char **cmd, t_shell *sh)
+static void	export_with_value(t_shell *sh, char *arg)
 {
 	char	*equal;
 	char	*key;
 	char	*value;
 
-	if (!cmd[1])
-		export_print(sh);
+	equal = ft_strchr(arg, '=');
+	key = ft_substr(arg, 0, equal - arg);
+	value = ft_strdup(equal + 1);
+	if (get_env_node(sh->env_list, key))
+		update_env_var(sh->env_list, key, value);
 	else
+		add_env_var(&sh->env_list, key, value);
+	free(key);
+	free(value);
+}
+
+static void	export_without_value(t_shell *sh, char *key)
+{
+	if (get_env_node(sh->env_list, key))
+		return ;
+	add_env_var(&sh->env_list, key, NULL);
+}
+
+void	builtin_export(char **cmd, t_shell *sh)
+{
+	if (!cmd[1])
 	{
-		equal = ft_strchr(cmd[1], '=');
-		if (equal)
-		{
-			key = ft_substr(cmd[1], 0, equal - cmd[1]);
-			value = ft_strdup(equal + 1);
-			if (get_env_node(sh->env_list, key))
-				update_env_var(sh->env_list, key, value);
-			else
-				add_env_var(&sh->env_list, key, value);
-			free(key);
-			free(value);
-		}
-		else
-		{
-			if (get_env_node(sh->env_list, cmd[1]))
-				return ;
-			else
-				add_env_var(&sh->env_list, cmd[1], NULL);
-		}
+		export_print(sh);
+		return ;
 	}
+	if (ft_strchr(cmd[1], '='))
+		export_with_value(sh, cmd[1]);
+	else
+		export_without_value(sh, cmd[1]);
 }

@@ -12,17 +12,26 @@
 
 #include "../../includes/minishell.h"
 
+static void	fill_builtins(t_builtin *b)
+{
+	b[0].name = "pwd";
+	b[0].func = builtin_pwd;
+	b[1].name = "env";
+	b[1].func = builtin_env;
+	b[2].name = "export";
+	b[2].func = builtin_export;
+	b[3].name = "unset";
+	b[3].func = builtin_unset;
+	b[4].name = NULL;
+	b[4].func = NULL;
+}
+
 void	init_builtin(t_shell *sh)
 {
-	int	n;
-	t_builtin	builtins[] = {
-		{"pwd", builtin_pwd},
-		{"env", builtin_env},
-		{"export", builtin_export},
-		{"unset", builtin_unset},
-		{NULL, NULL}
-	};
+	t_builtin	builtins[5];
+	int			n;
 
+	fill_builtins(builtins);
 	n = 0;
 	while (builtins[n].name)
 		n++;
