@@ -27,6 +27,9 @@ SRCS := main.c \
 
 LEXER_SRC := lexer_utils.c \
 				token_utils.c \
+				extract_world.c \
+				ft_strtok.c \
+				handle_op.c
 
 PARSER_SRC := parser.c \
 							parser_utils.c
