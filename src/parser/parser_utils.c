@@ -97,6 +97,7 @@ t_ast	*parser_cmd(t_token *tokens)
 	return (node);
 }
 
+//TODO: debug 
 void print_ast(t_ast *node, int depth)
 {
     if (!node)
