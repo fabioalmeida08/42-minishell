@@ -12,13 +12,45 @@
 
 #include "../../includes/minishell.h"
 
+static char	*try_path(char *dir, char *cmd)
+{
+	char	*tmp;
+	char	*full_path;
+
+	tmp = ft_strjoin(dir, "/");
+	if (!tmp)
+		return (NULL);
+	full_path = ft_strjoin(tmp, cmd);
+	free(tmp);
+	if (!full_path)
+		return (NULL);
+	if (access(full_path, X_OK) == 0)
+		return (full_path);
+	free(full_path);
+	return (NULL);
+}
+
+static char	*search_in_paths(char **paths, char *cmd)
+{
+	int		i;
+	char	*full_path;
+
+	i = 0;
+	while (paths[i])
+	{
+		full_path = try_path(paths[i], cmd);
+		if (full_path)
+			return (full_path);
+		i++;
+	}
+	return (NULL);
+}
+
 static char	*find_path(char *cmd, t_shell *sh)
 {
 	char	**paths;
 	char	*path_value;
-	char	*full_path;
-	char	*tmp;
-	int		i;
+	char	*result;
 
 	path_value = get_env_value(sh->env_list, "PATH");
 	if (!path_value)
@@ -26,23 +58,41 @@ static char	*find_path(char *cmd, t_shell *sh)
 	paths = ft_split(path_value, ':');
 	if (!paths)
 		return (NULL);
-	i = 0;
-	while (paths[i])
-	{
-		tmp = ft_strjoin(paths[i], "/");
-		full_path = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(full_path, X_OK) == 0)
-		{
-			free_envp(paths);
-			return (full_path);
-		}
-		free(full_path);
-		i++;
-	}
+	result = search_in_paths(paths, cmd);
 	free_envp(paths);
-	return (NULL);
+	return (result);
 }
+// static char	*find_path(char *cmd, t_shell *sh)
+// {
+// 	char	**paths;
+// 	char	*path_value;
+// 	char	*full_path;
+// 	char	*tmp;
+// 	int		i;
+//
+// 	path_value = get_env_value(sh->env_list, "PATH");
+// 	if (!path_value)
+// 		return (NULL);
+// 	paths = ft_split(path_value, ':');
+// 	if (!paths)
+// 		return (NULL);
+// 	i = 0;
+// 	while (paths[i])
+// 	{
+// 		tmp = ft_strjoin(paths[i], "/");
+// 		full_path = ft_strjoin(tmp, cmd);
+// 		free(tmp);
+// 		if (access(full_path, X_OK) == 0)
+// 		{
+// 			free_envp(paths);
+// 			return (full_path);
+// 		}
+// 		free(full_path);
+// 		i++;
+// 	}
+// 	free_envp(paths);
+// 	return (NULL);
+// }
 
 void	execve_cmd(char **input, t_shell *sh)
 {

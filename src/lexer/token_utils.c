@@ -30,7 +30,7 @@ t_token	*create_token(t_token_type type, char *value)
 void	add_token_back(t_token **head, t_token *new_token)
 {
 	t_token	*current;
-	
+
 	if (!head || !new_token)
 		return ;
 	if (!*head)
