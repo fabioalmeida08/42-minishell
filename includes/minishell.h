@@ -6,7 +6,7 @@
 /*   By: bolegari <bolegari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 10:47:12 by fabialme          #+#    #+#             */
-/*   Updated: 2025/12/15 15:18:43 by fabialme         ###   ########.fr       */
+/*   Updated: 2025/12/16 14:40:28 by bolegari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_shell
 	int			exit_status;
 	t_builtin	*g_builtins;
 	t_token		*head_tokens;
+	t_ast		*head_ast;
 }	t_shell;
 
 //MINISHELL(MAIN)
